@@ -2,12 +2,12 @@ import React from 'react';
 
 import {SafeAreaView, Text} from 'react-native';
 
-const FeedScreenView = () => {
+const PartnersScreenView = () => {
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Feed!</Text>
+      <Text>Dashboard!</Text>
     </SafeAreaView>
   );
 };
 
-export default FeedScreenView;
+export default PartnersScreenView;
