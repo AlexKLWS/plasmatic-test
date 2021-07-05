@@ -9,6 +9,9 @@ const colors = {
     light: '#9AA0AC',
     white: '#FFFFFF',
   },
+  ui: {
+    input: '#F9FBFC',
+  },
 };
 
 export default colors;
