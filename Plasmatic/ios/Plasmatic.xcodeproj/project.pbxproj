@@ -14,6 +14,8 @@
 		2D9752B8F12663A0FDB0E5EC /* libPods-Plasmatic-PlasmaticTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511066EDEE479BF5CE63836 /* libPods-Plasmatic-PlasmaticTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C58E371ADF169554D965D607 /* libPods-Plasmatic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4960564570C0B7616BE2B0BB /* libPods-Plasmatic.a */; };
+		3E5D51B051C7462A87B75DD9 /* avenir-heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B488552BB9441149B52B5D0 /* avenir-heavy.ttf */; };
+		87275DF8086841838C0E6805 /* avenir-roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0EC5676D70C476EBBC79AE3 /* avenir-roman.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		B09BA89FD4A4A9F9ECEBD064 /* Pods-Plasmatic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plasmatic.debug.xcconfig"; path = "Target Support Files/Pods-Plasmatic/Pods-Plasmatic.debug.xcconfig"; sourceTree = "<group>"; };
 		B0E573E0A09295B95BF8139B /* Pods-Plasmatic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Plasmatic.release.xcconfig"; path = "Target Support Files/Pods-Plasmatic/Pods-Plasmatic.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		6B488552BB9441149B52B5D0 /* avenir-heavy.ttf */ = {isa = PBXFileReference; name = "avenir-heavy.ttf"; path = "../src/assets/fonts/avenir-heavy.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F0EC5676D70C476EBBC79AE3 /* avenir-roman.ttf */ = {isa = PBXFileReference; name = "avenir-roman.ttf"; path = "../src/assets/fonts/avenir-roman.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				AE49251D4234F3FCDB90019E /* Pods */,
+				BCEED1620EAE4A0E8604975A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -148,6 +153,16 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		BCEED1620EAE4A0E8604975A /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				6B488552BB9441149B52B5D0 /* avenir-heavy.ttf */,
+				F0EC5676D70C476EBBC79AE3 /* avenir-roman.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +260,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				3E5D51B051C7462A87B75DD9 /* avenir-heavy.ttf in Resources */,
+				87275DF8086841838C0E6805 /* avenir-roman.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
