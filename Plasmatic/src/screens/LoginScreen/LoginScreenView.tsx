@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import AppLogo from '~/assets/icons/AppLogo';
 import AnimatedLoginBackground from '~/components/animatedLoginBackground/AnimatedLoginBackground';
 import PhoneInput from '~/shared/components/PhoneInput';
