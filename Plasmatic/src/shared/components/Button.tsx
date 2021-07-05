@@ -6,11 +6,18 @@ import styleSystem from '~/shared/styles';
 type Props = {
   text?: string;
   onPress: () => void;
+  testID?: string;
 };
 
 const Button: React.FC<Props> = props => {
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.container} onPress={props.onPress}>
+    <TouchableOpacity
+      accessibilityRole="button"
+      accessibilityLabel={'Generic Button'}
+      testID={props.testID}
+      activeOpacity={0.7}
+      style={styles.container}
+      onPress={props.onPress}>
       <View>
         <Text style={styles.text}>{props.text}</Text>
       </View>
