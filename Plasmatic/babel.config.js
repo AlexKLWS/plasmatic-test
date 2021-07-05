@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset', ['@babel/preset-typescript', {onlyRemoveTypeImports: true}]],
+  presets: ['module:metro-react-native-babel-preset', ['@babel/preset-typescript', { onlyRemoveTypeImports: true }]],
   plugins: [
     [
       'babel-plugin-root-import',
@@ -7,8 +7,9 @@ module.exports = {
         rootPathSuffix: 'src',
       },
     ],
-    ['@babel/plugin-proposal-decorators', {legacy: true}],
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
     'babel-plugin-parameter-decorator',
+    'react-native-reanimated/plugin',
   ],
   env: {
     production: {
@@ -19,6 +20,7 @@ module.exports = {
             rootPathSuffix: 'src',
           },
         ],
+        'react-native-reanimated/plugin',
       ],
     },
   },
