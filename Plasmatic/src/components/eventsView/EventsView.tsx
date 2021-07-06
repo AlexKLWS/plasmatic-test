@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import CalendarIcon from '~/assets/icons/home/CalendarIcon';
 import { scale } from '~/helpers/scale';
 
 import styleSystem from '~/shared/styles';
@@ -27,6 +28,18 @@ const EventsView = () => {
       </View>
       <View style={[styles.bottomEventsContainer, { marginTop: scale(16) }]}>
         <BigEventItem />
+        <View style={styles.iconContainer}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <CalendarIcon width={28} height={28} fill={styleSystem.colors.primary.blue} />
+            <Text
+              style={[
+                styleSystem.typography.labelMedium,
+                { color: styleSystem.colors.primary.blue, paddingLeft: scale(6) },
+              ]}>
+              Register
+            </Text>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -52,6 +65,11 @@ const styles = StyleSheet.create({
     backgroundColor: styleSystem.colors.secondary.white,
     paddingVertical: scale(24),
     paddingHorizontal: scale(16),
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: scale(16),
   },
 });
 
