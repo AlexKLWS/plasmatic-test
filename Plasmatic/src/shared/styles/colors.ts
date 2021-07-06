@@ -11,6 +11,8 @@ const colors = {
   },
   ui: {
     input: '#F9FBFC',
+    darkOverlay: '#00000030',
+    homeBackground: '#F0F1F5',
   },
 };
 
