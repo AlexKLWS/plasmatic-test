@@ -25,7 +25,7 @@ const typography = StyleSheet.create({
     color: colors.secondary.dark,
   },
   labelBig: {
-    fontFamily: 'avenir-roman',
+    fontFamily: 'avenir-heavy',
     fontSize: scale(15),
     color: colors.secondary.dark,
   },
