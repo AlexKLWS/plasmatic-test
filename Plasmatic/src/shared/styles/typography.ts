@@ -14,7 +14,7 @@ const typography = StyleSheet.create({
     textTransform: 'uppercase',
   },
   label: {
-    fontFamily: 'avenir-heavy',
+    fontFamily: 'avenir-roman',
     fontSize: scale(12),
     color: colors.secondary.dark,
   },
