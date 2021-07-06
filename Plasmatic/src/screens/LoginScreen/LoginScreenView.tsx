@@ -34,7 +34,7 @@ const LoginScreenView = () => {
         <KeyboardAvoidingView style={styles.bottomContainer}>
           <View style={styles.inputContainer}>
             <View style={styles.inputLabelContainer}>
-              <Text style={styleSystem.typography.label}>Phone Number</Text>
+              <Text style={styleSystem.typography.labelSmall}>Phone Number</Text>
             </View>
             <PhoneInput value={inputValue} onChangeText={updateInputValue} onSubmit={onLoginPressWrapper} />
           </View>

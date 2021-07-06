@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     paddingVertical: scale(4),
   },
   label: {
-    ...styleSystem.typography.label,
+    ...styleSystem.typography.labelSmall,
     fontFamily: 'avenir-heavy',
   },
 });

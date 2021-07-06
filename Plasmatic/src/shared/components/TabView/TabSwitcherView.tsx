@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: styleSystem.colors.secondary.white,
   },
   label: {
-    ...styleSystem.typography.H4,
+    ...styleSystem.typography.H5,
     color: styleSystem.colors.primary.blue,
   },
   bottomLine: {
