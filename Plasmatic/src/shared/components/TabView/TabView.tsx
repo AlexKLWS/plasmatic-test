@@ -8,7 +8,6 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import { scale } from '~/helpers/scale';
 import styleSystem from '~/shared/styles';
 
 import TabSwitcherView from './TabSwitcherView';
@@ -17,7 +16,6 @@ const { width: WIDTH } = Dimensions.get('window');
 
 interface Props {
   defaultTabIndex?: number;
-  containerStyles?: any;
   flatListContainerStyle?: any;
   tabsIds: string[];
   tabsContent: JSX.Element[];
@@ -73,9 +71,8 @@ const TabView: React.FC<Props> = React.forwardRef(
     }));
 
     return (
-      <Animated.View style={[styles.listsContainer, props.containerStyles]}>
+      <View style={styles.listsContainer}>
         <View style={styles.tabsContainer}>
-          <View style={styles.hideTopShadow} />
           <TabSwitcherView
             tabIds={props.tabsIds}
             currentSelectedTab={currentTab}
@@ -85,6 +82,7 @@ const TabView: React.FC<Props> = React.forwardRef(
         </View>
         <Animated.FlatList
           ref={listRef}
+          scrollEnabled={false}
           data={props.tabsContent}
           keyExtractor={(_: any, index: number) => `${index}`}
           renderItem={renderItem}
@@ -102,7 +100,7 @@ const TabView: React.FC<Props> = React.forwardRef(
           pagingEnabled
           horizontal
         />
-      </Animated.View>
+      </View>
     );
   },
 );
@@ -124,19 +122,8 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     backgroundColor: styleSystem.colors.secondary.white,
-    zIndex: 2,
     overflow: 'visible',
     position: 'relative',
-    marginTop: scale(8),
-  },
-  // Hack to hide the topshadow of tabs
-  hideTopShadow: {
-    position: 'absolute',
-    zIndex: 9,
-    width: '100%',
-    height: scale(8), // this need to be the same as elevation
-    top: -scale(8),
-    backgroundColor: styleSystem.colors.secondary.white,
   },
 });
 
