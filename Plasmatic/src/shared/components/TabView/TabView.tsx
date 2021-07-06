@@ -29,7 +29,7 @@ interface Props {
   defaultTabIndex?: number;
   flatListContainerStyle?: any;
   tabsIds: string[];
-  tabIcons?: Array<(value: string | number) => JSX.Element>;
+  tabIcons?: Array<(props: any) => JSX.Element>;
   tabsContent: JSX.Element[];
   onTabSwitchCallback?: (newTab: string) => void;
 }
@@ -123,7 +123,17 @@ const TabView: React.FC<Props> = React.forwardRef(
                     onTabButtonPress(tabId);
                   }}
                   activeOpacity={0.7}>
-                  <Animated.Text style={[styles.label, colorStyle]}>{tabId}</Animated.Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {props.tabIcons && (
+                      <View style={{ paddingRight: scale(5) }}>
+                        {props.tabIcons[index]({
+                          fill:
+                            currentTab === tabId ? styleSystem.colors.primary.blue : styleSystem.colors.secondary.light,
+                        })}
+                      </View>
+                    )}
+                    <Animated.Text style={[styles.label, colorStyle]}>{tabId}</Animated.Text>
+                  </View>
                   <Animated.View style={[styles.bottomLine, opacityStyle]} />
                 </TouchableOpacity>
               );
@@ -138,7 +148,7 @@ const TabView: React.FC<Props> = React.forwardRef(
           renderItem={renderItem}
           getItemLayout={getItemLayout}
           initialScrollIndex={defaultTabIndex}
-          scrollEventThrottle={10}
+          scrollEventThrottle={16}
           onScroll={scrollHandler}
           onMomentumScrollEnd={onMomentumScrollEnd}
           bounces={false}
