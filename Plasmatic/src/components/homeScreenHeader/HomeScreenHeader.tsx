@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(32),
     backgroundColor: styleSystem.colors.secondary.white,
     flexDirection: 'row',
-    paddingBottom: scale(32),
+    paddingBottom: scale(16),
     paddingTop: scale(32),
   },
   nameAndLocationContainer: {
