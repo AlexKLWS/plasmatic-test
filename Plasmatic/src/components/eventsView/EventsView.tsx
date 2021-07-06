@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import CalendarIcon from '~/assets/icons/home/CalendarIcon';
 import { scale } from '~/helpers/scale';
@@ -14,7 +14,9 @@ const EventsView = () => {
       <View style={styles.topEventsContainer}>
         <View style={styles.topEventsContainerTextSection}>
           <Text style={styleSystem.typography.H5}>Your Next Events</Text>
-          <Text style={styleSystem.typography.labelMedium}>View More</Text>
+          <TouchableOpacity>
+            <Text style={styleSystem.typography.labelMedium}>View More</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           nestedScrollEnabled
@@ -29,7 +31,7 @@ const EventsView = () => {
       <View style={[styles.bottomEventsContainer, { marginTop: scale(16) }]}>
         <BigEventItem />
         <View style={styles.iconContainer}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
             <CalendarIcon width={28} height={28} fill={styleSystem.colors.primary.blue} />
             <Text
               style={[
@@ -38,7 +40,7 @@ const EventsView = () => {
               ]}>
               Register
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
