@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   },
   label: {
     ...styleSystem.typography.label,
+    fontFamily: 'avenir-heavy',
   },
 });
 
