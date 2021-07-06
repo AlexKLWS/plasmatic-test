@@ -8,4 +8,8 @@ export default {
   events4: require('./events/4.webp'),
   events5: require('./events/5.webp'),
   events6: require('./events/6.webp'),
+  partners1: require('./partners/1.webp'),
+  partners2: require('./partners/2.webp'),
+  partners3: require('./partners/3.webp'),
+  partners4: require('./partners/4.webp'),
 };
