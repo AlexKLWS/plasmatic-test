@@ -21,10 +21,10 @@ const HomeScreenHeader = () => {
           flex: 1,
         }}>
         <View style={styles.nameAndLocationContainer}>
-          <Text style={styleSystem.typography.H3}>{'Hello, Ryan!'}</Text>
+          <Text style={styleSystem.typography.H4}>{'Hello, Ryan!'}</Text>
           <View style={styles.locationContianer}>
             <GeoPinIcon width={14} height={14} color={styleSystem.colors.secondary.dark} />
-            <Text style={[styleSystem.typography.label, { paddingLeft: scale(3) }]}>{'EcoWorld'}</Text>
+            <Text style={[styleSystem.typography.labelSmall, { paddingLeft: scale(3) }]}>{'EcoWorld'}</Text>
           </View>
         </View>
         <SearchIcon width={24} height={24} color={styleSystem.colors.secondary.dark} />
@@ -35,7 +35,7 @@ const HomeScreenHeader = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: scale(32),
+    paddingHorizontal: scale(24),
     backgroundColor: styleSystem.colors.secondary.white,
     flexDirection: 'row',
     paddingBottom: scale(16),
