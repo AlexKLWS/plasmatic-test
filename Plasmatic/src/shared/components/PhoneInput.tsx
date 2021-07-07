@@ -15,7 +15,7 @@ const PhoneInput: React.FC<Props> = props => {
       value={props.value}
       onChangeText={props.onChangeText}
       onEndEditing={props.onSubmit}
-      placeholder={'+1(xxx)-xxx-xx-xx'}
+      placeholder={'(xxx)-xxx-xx-xx'}
       keyboardType={'phone-pad'}
       style={styles.input}
     />
