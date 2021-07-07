@@ -1,4 +1,4 @@
-package com.plasmatic;
+package com.plasmatic.test;
 
 import com.facebook.react.ReactActivity;
 
