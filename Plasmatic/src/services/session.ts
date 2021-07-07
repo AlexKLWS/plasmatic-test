@@ -7,7 +7,6 @@ import { UserAuthStatus } from '~/types/userAuthStatus';
 
 export interface ISessionService {
   userStatus: BehaviorSubject<UserAuthStatus>;
-  signInAndFetchUser: () => Promise<Error | null>;
   signIn: () => Promise<[FirebaseAuthTypes.UserCredential | null, Error | null]>;
   stopUpdates: () => void;
 }
@@ -29,14 +28,6 @@ export class SessionService implements ISessionService {
     });
     this._firebaseAuthStateChangeSubscriber = auth().onAuthStateChanged(this.onFirebaseAuthStateChanged);
   }
-
-  public signInAndFetchUser = async () => {
-    const [firebaseUserCredential, error] = await this.signIn();
-    if (firebaseUserCredential?.user) {
-      this._userStatus.next(UserAuthStatus.AUTHORIZED);
-    }
-    return error;
-  };
 
   public stopUpdates = () => {
     if (this._firebaseAuthStateChangeSubscriber) {
