@@ -14,14 +14,13 @@ const mockUser = {
 };
 
 describe('fetchUserByEmail', () => {
+  @injectable()
+  class SessionServiceMock implements ISessionService {
+    userStatus: BehaviorSubject<UserAuthStatus> = new BehaviorSubject<UserAuthStatus>(UserAuthStatus.AUTHORIZED);
+    signIn = () => Promise.resolve([{ user: mockFirebaseUser }, null] as any);
+    stopUpdates: () => void = () => undefined;
+  }
   it('Should successfully fetch user by email', async () => {
-    @injectable()
-    class SessionServiceMock implements ISessionService {
-      userStatus: BehaviorSubject<UserAuthStatus> = new BehaviorSubject<UserAuthStatus>(UserAuthStatus.AUTHORIZED);
-      signIn = () => Promise.resolve([{ user: mockFirebaseUser }, null] as any);
-      stopUpdates: () => void = () => undefined;
-    }
-
     // @ts-expect-error
     mockFirestore().collection.mockImplementationOnce((collectionName: string) => {
       expect(collectionName).toEqual('users');
@@ -53,5 +52,71 @@ describe('fetchUserByEmail', () => {
     const [user, error] = await instance.fetchUserByEmail('alexkorzh7@gmail.com');
     expect(user).toEqual(mockUser);
     expect(error).toBeFalsy();
+  });
+  it('Should return error "User not found!"', async () => {
+    // @ts-expect-error
+    mockFirestore().collection.mockImplementationOnce((collectionName: string) => {
+      expect(collectionName).toEqual('users');
+      return {
+        where: (leftValue: string, operator: string, rightValue: string) => {
+          expect(leftValue).toEqual('email');
+          expect(operator).toEqual('==');
+          expect(rightValue).toEqual('alexkorzh7@gmail.com');
+          return {
+            get: () => {
+              return new Promise(resolve => {
+                resolve({
+                  empty: true,
+                  size: 0,
+                  docs: [],
+                });
+              });
+            },
+          };
+        },
+      };
+    });
+
+    const myContainer = new Container();
+    myContainer.bind<IUserService>(UserServiceId).to(UserService);
+    myContainer.bind<ISessionService>(SessionServiceId).to(SessionServiceMock);
+
+    const instance = myContainer.get<IUserService>(UserServiceId);
+    const [user, error] = await instance.fetchUserByEmail('alexkorzh7@gmail.com');
+    expect(user).toEqual(null);
+    expect(error?.message).toEqual('User not found!');
+  });
+  it('Should return error "More than one user with the same email"', async () => {
+    // @ts-expect-error
+    mockFirestore().collection.mockImplementationOnce((collectionName: string) => {
+      expect(collectionName).toEqual('users');
+      return {
+        where: (leftValue: string, operator: string, rightValue: string) => {
+          expect(leftValue).toEqual('email');
+          expect(operator).toEqual('==');
+          expect(rightValue).toEqual('alexkorzh7@gmail.com');
+          return {
+            get: () => {
+              return new Promise(resolve => {
+                resolve({
+                  empty: false,
+                  size: 2,
+                  docs: [{ data: () => mockUser }, { data: () => mockUser }],
+                });
+              });
+            },
+          };
+        },
+      };
+    });
+
+    const myContainer = new Container();
+    myContainer.bind<IUserService>(UserServiceId).to(UserService);
+    myContainer.bind<ISessionService>(SessionServiceId).to(SessionServiceMock);
+
+    const instance = myContainer.get<IUserService>(UserServiceId);
+    const [user, error] = await instance.fetchUserByEmail('alexkorzh7@gmail.com');
+    expect(user).toEqual(null);
+    expect(error?.message).toEqual('More than one user with the same email');
   });
 });
