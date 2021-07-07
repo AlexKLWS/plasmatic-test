@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import AppLogo from '~/assets/icons/AppLogo';
@@ -9,37 +9,48 @@ import Button from '~/shared/components/Button';
 import styleSystem from '~/shared/styles';
 import PhoneNumberFormatter from '~/helpers/phoneNumberFormatter';
 
-export const phoneNumberLength = 14;
-
 type Props = {
-  validateInput: (input: string) => void;
-  onLoginPress: (input: string) => Promise<void>;
+  validateInput: (input: string) => Error | null;
+  handleSignIn: (input: string) => Promise<Error | null>;
 };
 
-const LoginScreenView = () => {
+const LoginScreenView: React.FC<Props> = props => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
   const [inputValue, setInputValue] = useState<string>(PhoneNumberFormatter.formatPhone('', ''));
 
-  const updateInputValue = (value: string) => {
-    let text = value;
-    if (inputValue.length + 1 < text.length) {
-      text = PhoneNumberFormatter.clearPhone(decodeURIComponent(text.substr(inputValue.length)));
-      if (String(text[0]) === '1') {
-        text = `${text.substr(1)}`;
-      }
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  const updateInputValue = (newValue: string) => {
+    if (error) {
+      setError(null);
     }
-
-    const phone = PhoneNumberFormatter.clearPhone(text);
-
-    if (phone.length > phoneNumberLength) {
-      return;
-    }
-
-    const formatted = PhoneNumberFormatter.formatPhone(inputValue, text);
-    setInputValue(formatted);
+    setInputValue(PhoneNumberFormatter.getFormattedNumber(newValue, inputValue));
   };
 
-  const onLoginPressWrapper = async () => {};
+  const onLoginPressWrapper = async () => {
+    const validationError = props.validateInput(inputValue);
+    if (validationError) {
+      setError(validationError);
+      setInputValue(PhoneNumberFormatter.formatPhone('', ''));
+      return;
+    }
+    setIsLoading(true);
+    const signInError = await props.handleSignIn(inputValue);
+    if (isMounted.current) {
+      setIsLoading(false);
+      if (signInError) {
+        setError(signInError);
+        setInputValue(PhoneNumberFormatter.formatPhone('', ''));
+      }
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: styleSystem.colors.secondary.white }}>
