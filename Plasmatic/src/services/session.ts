@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { BehaviorSubject } from 'rxjs';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import config from 'react-native-config';
 
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { UserAuthStatus } from '~/types/userAuthStatus';
@@ -24,7 +25,7 @@ export class SessionService implements ISessionService {
 
   constructor() {
     GoogleSignin.configure({
-      webClientId: '',
+      webClientId: config.GOOGLE_WEB_CLIENT_ID,
     });
     this._firebaseAuthStateChangeSubscriber = auth().onAuthStateChanged(this.onFirebaseAuthStateChanged);
   }
