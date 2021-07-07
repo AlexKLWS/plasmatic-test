@@ -7,6 +7,9 @@ import PhoneInput from '~/shared/components/PhoneInput';
 import { scale } from '~/helpers/scale';
 import Button from '~/shared/components/Button';
 import styleSystem from '~/shared/styles';
+import PhoneNumberFormatter from '~/helpers/phoneNumberFormatter';
+
+export const phoneNumberLength = 14;
 
 type Props = {
   validateInput: (input: string) => void;
@@ -15,10 +18,25 @@ type Props = {
 
 const LoginScreenView = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string | undefined>();
+  const [inputValue, setInputValue] = useState<string>(PhoneNumberFormatter.formatPhone('', ''));
 
   const updateInputValue = (value: string) => {
-    setInputValue(value);
+    let text = value;
+    if (inputValue.length + 1 < text.length) {
+      text = PhoneNumberFormatter.clearPhone(decodeURIComponent(text.substr(inputValue.length)));
+      if (String(text[0]) === '1') {
+        text = `${text.substr(1)}`;
+      }
+    }
+
+    const phone = PhoneNumberFormatter.clearPhone(text);
+
+    if (phone.length > phoneNumberLength) {
+      return;
+    }
+
+    const formatted = PhoneNumberFormatter.formatPhone(inputValue, text);
+    setInputValue(formatted);
   };
 
   const onLoginPressWrapper = async () => {};
