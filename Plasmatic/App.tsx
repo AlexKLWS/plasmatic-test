@@ -1,12 +1,18 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 
 import AppStack from '~/navigation/AppStack';
+import { container, containerModule } from '~/services/container';
+import { ServiceProvider } from '~/services/serviceProvider';
+
+container.load(containerModule);
 
 const App = () => {
   return (
     <NavigationContainer>
-      <AppStack />
+      <ServiceProvider container={container}>
+        <AppStack />
+      </ServiceProvider>
     </NavigationContainer>
   );
 };
