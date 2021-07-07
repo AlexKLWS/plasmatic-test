@@ -3,16 +3,17 @@ import React from 'react';
 import SplashStack from '~/navigation/SplashStack';
 import AuthStack from '~/navigation/AuthStack';
 import HomeStack from '~/navigation/HomeStack';
+import { useUserAuthStatus } from '~/facades/userStatusFacade';
+import { UserAuthStatus } from '~/types/userAuthStatus';
 
 const AppStack = () => {
-  const isLoading = false;
-  const userAuthenticated = false;
+  const { userAuthStatus } = useUserAuthStatus();
 
-  if (isLoading) {
+  if (userAuthStatus === UserAuthStatus.UNKNOWN) {
     return <SplashStack />;
   }
 
-  return userAuthenticated ? <HomeStack /> : <AuthStack />;
+  return userAuthStatus === UserAuthStatus.AUTHORIZED ? <HomeStack /> : <AuthStack />;
 };
 
 export default AppStack;
