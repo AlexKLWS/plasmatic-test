@@ -1,4 +1,25 @@
+export const phoneNumberLength = 14;
+
 export default abstract class PhoneNumberFormatter {
+  static getFormattedNumber(newValue: string, prevValue: string) {
+    let text = newValue;
+    if (prevValue.length + 1 < text.length) {
+      text = PhoneNumberFormatter.clearPhone(decodeURIComponent(text.substr(prevValue.length)));
+      if (String(text[0]) === '1') {
+        text = `${text.substr(1)}`;
+      }
+    }
+
+    const phone = PhoneNumberFormatter.clearPhone(text);
+
+    if (phone.length > phoneNumberLength) {
+      return prevValue;
+    }
+
+    const formatted = PhoneNumberFormatter.formatPhone(prevValue, text);
+    return formatted;
+  }
+
   static formatPhone(phone: string, newPhone: string): string {
     if (newPhone.length < phone.length) {
       if (phone.endsWith('-')) {
