@@ -125,7 +125,7 @@ const TabView: React.FC<Props> = React.forwardRef(
                   activeOpacity={0.7}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {props.tabIcons && (
-                      <View style={{ paddingRight: scale(5) }}>
+                      <View style={{ paddingRight: scale(10) }}>
                         {props.tabIcons[index]({
                           fill:
                             currentTab === tabId ? styleSystem.colors.primary.blue : styleSystem.colors.secondary.light,
