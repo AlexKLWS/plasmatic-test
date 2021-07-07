@@ -1,11 +1,10 @@
 import { Container } from 'inversify';
 import mockAuth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { ISessionService, SessionServiceId, SessionService } from '~/services/session';
 import { UserAuthStatus } from '~/types/userAuthStatus';
 
-const mockUser = {
+export const mockFirebaseUser = {
   displayName: 'Alex',
   email: 'alexkorzh7@gmail.com',
   emailVerified: true,
@@ -40,7 +39,7 @@ describe('userStatus', () => {
   it('User status should be authorized', done => {
     // @ts-expect-error
     mockAuth().onAuthStateChanged.mockImplementationOnce((callback: (user: FirebaseAuthTypes.User | null) => void) => {
-      callback(mockUser as any);
+      callback(mockFirebaseUser as any);
       done();
     });
 
@@ -71,7 +70,7 @@ describe('signIn', () => {
     // @ts-expect-error
     mockAuth().signInWithCredential.mockImplementationOnce((status: any) => {
       expect(status.auth).toEqual(true);
-      return { user: mockUser };
+      return { user: mockFirebaseUser };
     });
 
     const myContainer = new Container();
@@ -84,7 +83,7 @@ describe('signIn', () => {
     expect(subscriptionCallback).toBeCalledWith(UserAuthStatus.UNAUTHORIZED);
 
     const [firebaseUserCredential, error] = await instance.signIn();
-    expect(firebaseUserCredential?.user).toEqual(mockUser);
+    expect(firebaseUserCredential?.user).toEqual(mockFirebaseUser);
     expect(error).toBeFalsy();
   });
 });
