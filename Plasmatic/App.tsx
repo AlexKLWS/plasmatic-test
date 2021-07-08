@@ -2,20 +2,31 @@ import React from 'react';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 
 import AppStack from '~/navigation/AppStack';
-
-const deepLinksConfig = {
-  screens: {
-    Services: 'services',
-    Partners: 'partners',
-    Activity: 'activity',
-    Login: 'login',
-    Home: 'home',
-  },
-};
+import { Linking } from 'react-native';
+import { deepLinksConfig } from '~/consts/deepLinksConfig';
+import { navigationLinkingPrefixes } from '~/consts/navigationLinkingPrefixes';
 
 const linking: LinkingOptions = {
-  prefixes: ['plasmatictest://', 'https://plasmatic-test.com'],
+  prefixes: navigationLinkingPrefixes,
   config: deepLinksConfig,
+  async getInitialURL() {
+    const url = await Linking.getInitialURL();
+
+    if (url !== null) {
+      return url;
+    }
+  },
+  subscribe(listener) {
+    const onReceiveURL = ({ url }: { url: string }) => {
+      listener(url);
+    };
+
+    Linking.addEventListener('url', onReceiveURL);
+
+    return () => {
+      Linking.removeEventListener('url', onReceiveURL);
+    };
+  },
 };
 
 const App = () => {
