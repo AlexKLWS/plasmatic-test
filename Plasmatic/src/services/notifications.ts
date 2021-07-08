@@ -13,6 +13,7 @@ export interface INotificationService {
   getGCMToken: () => Promise<string | null>;
   getInitialNotificationLink: () => Promise<string | undefined>;
   onNotificationOpenedApp: (listener: (url: string) => void) => void;
+  removeNotificationOpenListener: () => void;
 }
 
 @injectable()
@@ -69,6 +70,10 @@ export class NotificationService implements INotificationService {
       }
     });
     this._unsubscribeFromNotifications = unsubscribeFromNotifications;
+  };
+
+  public removeNotificationOpenListener = () => {
+    this._unsubscribeFromNotifications();
   };
 
   private async checkIfPermissionHasBeenGranted() {
