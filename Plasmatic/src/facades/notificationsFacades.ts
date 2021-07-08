@@ -13,6 +13,10 @@ export const useNotifications = () => {
     service.current.onNotificationOpenedApp(listener);
   };
 
+  const removeNotificationOpenListener = () => {
+    service.current.removeNotificationOpenListener();
+  };
+
   const printOutNotificationsToken = async () => {
     const token = await service.current.getGCMToken();
     console.log('🚀 ~ file: notificationsFacades.ts ~ line 18 ~ printOutNotificationsToken ~ token', token);
@@ -22,5 +26,5 @@ export const useNotifications = () => {
     printOutNotificationsToken();
   }, []);
 
-  return { getInitialNotificationLink, onNotificationOpenedApp };
+  return { getInitialNotificationLink, onNotificationOpenedApp, removeNotificationOpenListener };
 };
