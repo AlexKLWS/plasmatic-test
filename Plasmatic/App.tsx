@@ -1,18 +1,27 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 
 import AppStack from '~/navigation/AppStack';
-import { container, containerModule } from '~/services/container';
-import { ServiceProvider } from '~/services/serviceProvider';
 
-container.load(containerModule);
+const deepLinksConfig = {
+  screens: {
+    Services: 'services',
+    Partners: 'partners',
+    Activity: 'activity',
+    Login: 'login',
+    Home: 'home',
+  },
+};
+
+const linking: LinkingOptions = {
+  prefixes: ['plasmatictest://', 'https://plasmatic.page.link'],
+  config: deepLinksConfig,
+};
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <ServiceProvider container={container}>
-        <AppStack />
-      </ServiceProvider>
+    <NavigationContainer linking={linking}>
+      <AppStack />
     </NavigationContainer>
   );
 };
