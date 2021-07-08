@@ -191,6 +191,34 @@ describe('signInAndFetchUserByEmail', () => {
       signIn = () => Promise.resolve([null, new Error()] as any);
       stopUpdates: () => void = () => undefined;
     }
+
+    const myContainer = new Container();
+    myContainer.bind<IUserService>(UserServiceId).to(UserService);
+    myContainer.bind<ISessionService>(SessionServiceId).to(SessionServiceMock);
+    myContainer.bind<IStorageService>(StorageServiceId).to(StorageServiceMock);
+
+    const instance = myContainer.get<IUserService>(UserServiceId);
+    const error = await instance.signInAndFetchUserByEmail();
+
+    expect(error).toBeTruthy();
+  });
+});
+
+describe('refreshUser', () => {
+  @injectable()
+  class StorageServiceMock implements IStorageService {
+    storeObject: (key: string, value: any) => Promise<void> = () => Promise.resolve();
+    getObject: (key: string) => Promise<any> = () => Promise.resolve(null);
+  }
+
+  it('Should successfully update user', async () => {
+    @injectable()
+    class SessionServiceMock implements ISessionService {
+      firebaseUser: FirebaseAuthTypes.User | null = mockFirebaseUser as any;
+      userStatus: BehaviorSubject<UserAuthStatus> = new BehaviorSubject<UserAuthStatus>(UserAuthStatus.AUTHORIZED);
+      signIn = () => Promise.resolve([{ user: mockFirebaseUser }, null] as any);
+      stopUpdates: () => void = () => undefined;
+    }
     // @ts-expect-error
     mockFirestore().collection.mockImplementationOnce((collectionName: string) => {
       expect(collectionName).toEqual('users');
@@ -220,8 +248,69 @@ describe('signInAndFetchUserByEmail', () => {
     myContainer.bind<IStorageService>(StorageServiceId).to(StorageServiceMock);
 
     const instance = myContainer.get<IUserService>(UserServiceId);
-    const error = await instance.signInAndFetchUserByEmail();
+    const error = await instance.refreshUser();
+
+    expect(error).toBeFalsy();
+  });
+  it('Should return error if refresh fails', async () => {
+    @injectable()
+    class SessionServiceMock implements ISessionService {
+      firebaseUser: FirebaseAuthTypes.User | null = mockFirebaseUser as any;
+      userStatus: BehaviorSubject<UserAuthStatus> = new BehaviorSubject<UserAuthStatus>(UserAuthStatus.AUTHORIZED);
+      signIn = () => Promise.resolve([{ user: mockFirebaseUser }, null] as any);
+      stopUpdates: () => void = () => undefined;
+    }
+    // @ts-expect-error
+    mockFirestore().collection.mockImplementationOnce((collectionName: string) => {
+      expect(collectionName).toEqual('users');
+      return {
+        where: (leftValue: string, operator: string, rightValue: string) => {
+          expect(leftValue).toEqual('email');
+          expect(operator).toEqual('==');
+          expect(rightValue).toEqual('alexkorzh7@gmail.com');
+          return {
+            get: () => {
+              return new Promise(resolve => {
+                resolve({
+                  empty: true,
+                  size: 0,
+                  docs: [],
+                });
+              });
+            },
+          };
+        },
+      };
+    });
+
+    const myContainer = new Container();
+    myContainer.bind<IUserService>(UserServiceId).to(UserService);
+    myContainer.bind<ISessionService>(SessionServiceId).to(SessionServiceMock);
+    myContainer.bind<IStorageService>(StorageServiceId).to(StorageServiceMock);
+
+    const instance = myContainer.get<IUserService>(UserServiceId);
+    const error = await instance.refreshUser();
 
     expect(error).toBeTruthy();
+  });
+  it('Should return "No firebase user!" error if no firebase user is avaialble', async () => {
+    @injectable()
+    class SessionServiceMock implements ISessionService {
+      firebaseUser: FirebaseAuthTypes.User | null = null;
+      userStatus: BehaviorSubject<UserAuthStatus> = new BehaviorSubject<UserAuthStatus>(UserAuthStatus.AUTHORIZED);
+      signIn = () => Promise.resolve([{ user: mockFirebaseUser }, null] as any);
+      stopUpdates: () => void = () => undefined;
+    }
+
+    const myContainer = new Container();
+    myContainer.bind<IUserService>(UserServiceId).to(UserService);
+    myContainer.bind<ISessionService>(SessionServiceId).to(SessionServiceMock);
+    myContainer.bind<IStorageService>(StorageServiceId).to(StorageServiceMock);
+
+    const instance = myContainer.get<IUserService>(UserServiceId);
+    const error = await instance.refreshUser();
+
+    expect(error).toBeTruthy();
+    expect(error?.message).toEqual('No firebase user!');
   });
 });
