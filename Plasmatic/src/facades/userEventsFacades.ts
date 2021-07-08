@@ -11,22 +11,25 @@ export const useUserEvents = () => {
         resolve([
           [
             {
-              imageURL: 'events2',
+              thumbnailURL: 'events2',
               eventName: 'Business Head Meeting',
               time: 'Mon Jul 18, 12:00 pm',
               location: 'EcoWorld, CA',
+              bigThumbnailURL: 'events4',
             },
             {
-              imageURL: 'events1',
+              thumbnailURL: 'events1',
               eventName: 'Interview',
               time: 'Mon Jul 18, 12:00 pm',
               location: 'EcoWorld, CA',
+              bigThumbnailURL: 'events4',
             },
             {
-              imageURL: 'events3',
+              thumbnailURL: 'events3',
               eventName: 'Another Important Meeting',
               time: 'Mon Jul 18, 12:00 pm',
               location: 'EcoWorld, CA',
+              bigThumbnailURL: 'events4',
             },
           ],
           null,

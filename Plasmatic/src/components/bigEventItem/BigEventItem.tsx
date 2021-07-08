@@ -11,7 +11,10 @@ import { resolveEventThumbnailURL } from '~/helpers/resolvePicURL';
 const BigEventItem: React.FC<UserEvent> = props => {
   return (
     <TouchableOpacity activeOpacity={0.85} style={styles.container}>
-      <FastImage style={{ height: scale(186), width: '100%' }} source={resolveEventThumbnailURL(props.imageURL)} />
+      <FastImage
+        style={{ height: scale(186), width: '100%' }}
+        source={resolveEventThumbnailURL(props.bigThumbnailURL)}
+      />
       <LinearGradient colors={['transparent', styleSystem.colors.ui.darkOverlay]} style={styles.contentContainer}>
         <Text style={[styleSystem.typography.H3, { color: styleSystem.colors.secondary.white }]}>
           {props.eventName}

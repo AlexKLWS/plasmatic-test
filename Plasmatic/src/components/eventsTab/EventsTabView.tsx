@@ -31,7 +31,7 @@ const EventsTabView: React.FC<Props> = props => {
           data={props.events}
           keyExtractor={({ eventName }) => `${eventName}`}
           renderItem={({ item }) => (
-            <SmallEventItem eventName={item.eventName} imageURL={item.imageURL} time={item.time} />
+            <SmallEventItem eventName={item.eventName} imageURL={item.thumbnailURL} time={item.time} />
           )}
           ListEmptyComponent={
             props.isLoading ? (
