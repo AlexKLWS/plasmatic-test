@@ -11,6 +11,8 @@ export interface INotificationService {
   getIOSAuthStatus: () => Promise<FirebaseMessagingTypes.AuthorizationStatus>;
   requestPermission: () => Promise<boolean>;
   getGCMToken: () => Promise<string | null>;
+  getInitialNotificationLink: () => Promise<string | undefined>;
+  onNotificationOpenedApp: (listener: (url: string) => void) => void;
 }
 
 @injectable()
