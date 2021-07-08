@@ -6,10 +6,14 @@ import { onEmit } from '~/helpers/onEmit';
 import { IUserService, UserServiceId } from '~/services/user';
 import { User } from '~/types/user';
 
-export const useUserAuthStatus = () => {
+export const useUser = () => {
   const service = useRef(useInjection<IUserService>(UserServiceId));
 
   const [user, setUser] = useState<User | null>(null);
+
+  const refreshUser = () => {
+    return service.current.refreshUser();
+  };
 
   useEffect(() => {
     const subscriptions: Subscription[] = [
@@ -23,7 +27,7 @@ export const useUserAuthStatus = () => {
     };
   }, []);
 
-  return { user };
+  return { user, refreshUser };
 };
 
 export const useUserSignInAndFetch = () => {
