@@ -1,37 +1,47 @@
-import React from 'react';
-import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
+import React, { useRef } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 import AppStack from '~/navigation/AppStack';
 import { Linking } from 'react-native';
 import { deepLinksConfig } from '~/consts/deepLinksConfig';
 import { navigationLinkingPrefixes } from '~/consts/navigationLinkingPrefixes';
-
-const linking: LinkingOptions = {
-  prefixes: navigationLinkingPrefixes,
-  config: deepLinksConfig,
-  async getInitialURL() {
-    const url = await Linking.getInitialURL();
-
-    if (url !== null) {
-      return url;
-    }
-  },
-  subscribe(listener) {
-    const onReceiveURL = ({ url }: { url: string }) => {
-      listener(url);
-    };
-
-    Linking.addEventListener('url', onReceiveURL);
-
-    return () => {
-      Linking.removeEventListener('url', onReceiveURL);
-    };
-  },
-};
+import { useNotifications } from '~/facades/notificationsFacades';
 
 const App = () => {
+  const { getInitialNotificationLink, onNotificationOpenedApp, removeNotificationOpenListener } = useNotifications();
+
+  const linking = useRef({
+    prefixes: navigationLinkingPrefixes,
+    config: deepLinksConfig,
+    async getInitialURL() {
+      const url = await Linking.getInitialURL();
+
+      if (url !== null) {
+        return url;
+      }
+
+      const notificationLink = await getInitialNotificationLink();
+
+      return notificationLink;
+    },
+    subscribe(listener: (url: string) => void) {
+      const onReceiveURL = ({ url }: { url: string }) => {
+        listener(url);
+      };
+
+      Linking.addEventListener('url', onReceiveURL);
+
+      onNotificationOpenedApp(listener);
+
+      return () => {
+        Linking.removeEventListener('url', onReceiveURL);
+        removeNotificationOpenListener();
+      };
+    },
+  });
+
   return (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer linking={linking.current}>
       <AppStack />
     </NavigationContainer>
   );
