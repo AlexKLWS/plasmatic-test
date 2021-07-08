@@ -8,11 +8,21 @@ import images from '~/assets/images';
 import styleSystem from '~/shared/styles';
 import GeoPinIcon from '~/assets/icons/GeoPinIcon';
 import SearchIcon from '~/assets/icons/SearchIcon';
+import { resolveProfilePicURL } from '~/helpers/resolveProfilePicURL';
 
-const HomeScreenHeader = () => {
+type Props = {
+  name: string | null;
+  location: string | null;
+  profilePictureURL: string | null;
+};
+
+const HomeScreenHeader: React.FC<Props> = props => {
   return (
     <View style={styles.container}>
-      <FastImage style={{ width: scale(64), height: scale(64), borderRadius: 64 }} source={images.portrait1} />
+      <FastImage
+        style={{ width: scale(64), height: scale(64), borderRadius: 64 }}
+        source={resolveProfilePicURL(props.profilePictureURL)}
+      />
       <View
         style={{
           flexDirection: 'row',
@@ -21,11 +31,13 @@ const HomeScreenHeader = () => {
           flex: 1,
         }}>
         <View style={styles.nameAndLocationContainer}>
-          <Text style={styleSystem.typography.H4}>{'Hello, Ryan!'}</Text>
-          <View style={styles.locationContianer}>
-            <GeoPinIcon width={14} height={14} color={styleSystem.colors.secondary.dark} />
-            <Text style={[styleSystem.typography.labelSmall, { paddingLeft: scale(3) }]}>{'EcoWorld'}</Text>
-          </View>
+          <Text style={styleSystem.typography.H4}>{props.name || ''}</Text>
+          {props.location && (
+            <View style={styles.locationContianer}>
+              <GeoPinIcon width={14} height={14} color={styleSystem.colors.secondary.dark} />
+              <Text style={[styleSystem.typography.labelSmall, { paddingLeft: scale(3) }]}>{props.location}</Text>
+            </View>
+          )}
         </View>
         <SearchIcon width={24} height={24} color={styleSystem.colors.secondary.dark} />
       </View>

@@ -8,7 +8,13 @@ import EventsView from '~/components/eventsView/EventsView';
 import HomeScreenHeader from '~/components/homeScreenHeader/HomeScreenHeader';
 import TabView from '~/shared/components/TabView';
 
-const HomeScreenView = () => {
+type Props = {
+  name: string | null;
+  location: string | null;
+  profilePictureURL: string | null;
+};
+
+const HomeScreenView: React.FC<Props> = props => {
   const homeViews = [
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home1</Text>
@@ -21,7 +27,7 @@ const HomeScreenView = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <HomeScreenHeader />
+      <HomeScreenHeader name={props.name} location={props.location} profilePictureURL={props.profilePictureURL} />
       <TabView
         defaultTabIndex={1}
         tabsContent={homeViews}
