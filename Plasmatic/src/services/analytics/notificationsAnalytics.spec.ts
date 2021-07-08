@@ -36,7 +36,7 @@ describe('reportInitialNotificationOpen', () => {
 
     const instance = myContainer.get<INotificationAnalyticsService>(NotificationAnalyticsServiceId);
 
-    await instance.reportChatNotificationOpen(notification);
+    await instance.reportInitialNotificationOpen(notification);
     expect(mockAnalytics().logEvent).toBeCalled();
   });
 });
