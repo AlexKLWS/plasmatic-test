@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import CalendarIcon from '~/assets/icons/home/CalendarIcon';
 import PeopleIcon from '~/assets/icons/home/PeopleIcon';
 import PostsIcon from '~/assets/icons/home/PostsIcon';
-import EventsView from '~/components/eventsView/EventsView';
+import EventsTab from '~/components/eventsTab';
 
 import HomeScreenHeader from '~/components/homeScreenHeader/HomeScreenHeader';
 import TabView from '~/shared/components/TabView';
@@ -19,7 +19,7 @@ const HomeScreenView: React.FC<Props> = props => {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home1</Text>
     </View>,
-    <EventsView />,
+    <EventsTab />,
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home3</Text>
     </View>,

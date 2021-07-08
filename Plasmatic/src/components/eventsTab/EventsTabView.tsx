@@ -1,14 +1,20 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import CalendarIcon from '~/assets/icons/home/CalendarIcon';
 import { scale } from '~/helpers/scale';
 
 import styleSystem from '~/shared/styles';
+import { UserEvent } from '~/types/event';
 import BigEventItem from '../bigEventItem/BigEventItem';
 import SmallEventItem from '../smallEventItem/SmallEventItem';
 
-const EventsView = () => {
+type Props = {
+  events: UserEvent[];
+  isLoading: boolean;
+};
+
+const EventsTabView: React.FC<Props> = props => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.topEventsContainer}>
@@ -22,27 +28,38 @@ const EventsView = () => {
           nestedScrollEnabled
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={[1, 2, 3]}
-          keyExtractor={i => `${i}`}
-          renderItem={() => <SmallEventItem />}
+          data={props.events}
+          keyExtractor={({ eventName }) => `${eventName}`}
+          renderItem={({ item }) => (
+            <SmallEventItem eventName={item.eventName} imageURL={item.imageURL} time={item.time} />
+          )}
+          ListEmptyComponent={
+            props.isLoading ? (
+              <ActivityIndicator color={styleSystem.colors.primary.blue} />
+            ) : (
+              <Text style={styleSystem.typography.labelMedium}>There're no events!</Text>
+            )
+          }
           contentContainerStyle={{ flexGrow: 1, paddingHorizontal: scale(16) }}
         />
       </View>
-      <View style={[styles.bottomEventsContainer, { marginTop: scale(16) }]}>
-        <BigEventItem />
-        <View style={styles.iconContainer}>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <CalendarIcon width={28} height={28} fill={styleSystem.colors.primary.blue} />
-            <Text
-              style={[
-                styleSystem.typography.labelMedium,
-                { color: styleSystem.colors.primary.blue, paddingLeft: scale(6) },
-              ]}>
-              Register
-            </Text>
-          </TouchableOpacity>
+      {props.events && props.events.length !== 0 && (
+        <View style={[styles.bottomEventsContainer, { marginTop: scale(16) }]}>
+          <BigEventItem {...props.events[0]} />
+          <View style={styles.iconContainer}>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <CalendarIcon width={28} height={28} fill={styleSystem.colors.primary.blue} />
+              <Text
+                style={[
+                  styleSystem.typography.labelMedium,
+                  { color: styleSystem.colors.primary.blue, paddingLeft: scale(6) },
+                ]}>
+                Register
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      )}
     </ScrollView>
   );
 };
@@ -75,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventsView;
+export default EventsTabView;
