@@ -14,7 +14,7 @@ const deepLinksConfig = {
 };
 
 const linking: LinkingOptions = {
-  prefixes: ['plasmatictest://', 'https://plasmatic.page.link'],
+  prefixes: ['plasmatictest://', 'https://plasmatic-test.com'],
   config: deepLinksConfig,
 };
 
