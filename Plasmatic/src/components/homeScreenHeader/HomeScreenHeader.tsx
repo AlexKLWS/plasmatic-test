@@ -4,11 +4,10 @@ import { View, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import { scale } from '~/helpers/scale';
-import images from '~/assets/images';
 import styleSystem from '~/shared/styles';
 import GeoPinIcon from '~/assets/icons/GeoPinIcon';
 import SearchIcon from '~/assets/icons/SearchIcon';
-import { resolveProfilePicURL } from '~/helpers/resolveProfilePicURL';
+import { resolveProfilePicURL } from '~/helpers/resolvePicURL';
 
 type Props = {
   name: string | null;
