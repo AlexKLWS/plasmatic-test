@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import AppLogo from '~/assets/icons/AppLogo';
 import AnimatedLoginBackground from '~/components/animatedLoginBackground/AnimatedLoginBackground';
 import PhoneInput from '~/shared/components/PhoneInput';
@@ -65,9 +65,18 @@ const LoginScreenView: React.FC<Props> = props => {
             <View style={styles.inputLabelContainer}>
               <Text style={styleSystem.typography.labelSmall}>Phone Number</Text>
             </View>
-            <PhoneInput value={inputValue} onChangeText={updateInputValue} onSubmit={onLoginPressWrapper} />
+            <PhoneInput
+              disabled={isLoading}
+              value={inputValue}
+              onChangeText={updateInputValue}
+              onSubmit={onLoginPressWrapper}
+            />
           </View>
-          <Button text={'Login'} onPress={onLoginPressWrapper} />
+          {isLoading ? (
+            <ActivityIndicator color={styleSystem.colors.primary.blue} />
+          ) : (
+            <Button text={'Login'} onPress={onLoginPressWrapper} />
+          )}
         </KeyboardAvoidingView>
       </View>
     </SafeAreaView>

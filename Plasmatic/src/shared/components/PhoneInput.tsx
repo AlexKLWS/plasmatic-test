@@ -7,11 +7,13 @@ type Props = {
   value: string | undefined;
   onChangeText: (value: string) => void;
   onSubmit: () => void;
+  disabled: boolean;
 };
 
 const PhoneInput: React.FC<Props> = props => {
   return (
     <TextInput
+      editable={!props.disabled}
       value={props.value}
       onChangeText={props.onChangeText}
       onEndEditing={props.onSubmit}
