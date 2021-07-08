@@ -5,18 +5,20 @@ import FastImage from 'react-native-fast-image';
 import images from '~/assets/images';
 import { scale } from '~/helpers/scale';
 import styleSystem from '~/shared/styles';
+import { UserEvent } from '~/types/event';
+import { resolveEventThumbnailURL } from '~/helpers/resolvePicURL';
 
-const BigEventItem = () => {
+const BigEventItem: React.FC<UserEvent> = props => {
   return (
     <TouchableOpacity activeOpacity={0.85} style={styles.container}>
-      <FastImage style={{ height: scale(186), width: '100%' }} source={images.events1} />
+      <FastImage style={{ height: scale(186), width: '100%' }} source={resolveEventThumbnailURL(props.imageURL)} />
       <LinearGradient colors={['transparent', styleSystem.colors.ui.darkOverlay]} style={styles.contentContainer}>
         <Text style={[styleSystem.typography.H3, { color: styleSystem.colors.secondary.white }]}>
-          Business Head Meeting
+          {props.eventName}
         </Text>
         <Text
           style={[styleSystem.typography.labelMedium, { color: styleSystem.colors.secondary.white, opacity: 0.65 }]}>
-          Mon Jul 18, 12:00pm • EcoWorld, CA
+          {`${props.time} • ${props.location}`}
         </Text>
       </LinearGradient>
     </TouchableOpacity>
