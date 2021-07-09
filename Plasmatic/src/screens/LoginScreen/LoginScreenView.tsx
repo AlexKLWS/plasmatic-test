@@ -65,12 +65,7 @@ const LoginScreenView: React.FC<Props> = props => {
             <View style={styles.inputLabelContainer}>
               <Text style={styleSystem.typography.labelSmall}>Phone Number</Text>
             </View>
-            <PhoneInput
-              disabled={isLoading}
-              value={inputValue}
-              onChangeText={updateInputValue}
-              onSubmit={onLoginPressWrapper}
-            />
+            <PhoneInput disabled={isLoading} value={inputValue} onChangeText={updateInputValue} />
           </View>
           {isLoading ? (
             <ActivityIndicator color={styleSystem.colors.primary.blue} />

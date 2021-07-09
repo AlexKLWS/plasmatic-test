@@ -10,6 +10,7 @@ export interface ISessionService {
   firebaseUser: FirebaseAuthTypes.User | null;
   userStatus: BehaviorSubject<UserAuthStatus>;
   signIn: () => Promise<[FirebaseAuthTypes.UserCredential | null, Error | null]>;
+  signOut: () => Promise<void>;
   stopUpdates: () => void;
 }
 
@@ -53,6 +54,12 @@ export class SessionService implements ISessionService {
       console.log(e);
       return [null, e];
     }
+  };
+
+  public signOut = async () => {
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    await auth().signOut();
   };
 
   private onFirebaseAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {

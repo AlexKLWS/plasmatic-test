@@ -21,7 +21,6 @@ export const useUser = () => {
         setUser(value);
       }),
     ];
-    service.current.signInAndFetchUserByEmail;
     return () => {
       subscriptions.forEach(it => it.unsubscribe());
     };
@@ -38,4 +37,14 @@ export const useUserSignInAndFetch = () => {
   };
 
   return { signInAndFetchUser };
+};
+
+export const useClearUserAndSignOut = () => {
+  const service = useRef(useInjection<IUserService>(UserServiceId));
+
+  const clearUserAndSignOut = () => {
+    return service.current.clearUserAndSignOut();
+  };
+
+  return { clearUserAndSignOut };
 };

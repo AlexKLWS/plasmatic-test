@@ -12,6 +12,7 @@ export interface IUserService {
   refreshUser: () => Promise<Error | null>;
   fetchUserByEmail: (email: string) => Promise<[User | null, Error | null]>;
   signInAndFetchUserByEmail: () => Promise<Error | null>;
+  clearUserAndSignOut: () => Promise<void>;
 }
 
 @injectable()
@@ -65,6 +66,11 @@ export class UserService implements IUserService {
       return userFetchError;
     }
     return error;
+  };
+
+  public clearUserAndSignOut = async () => {
+    this._user.next(null);
+    await this._sessionService.signOut();
   };
 
   private retrievePersistedUser = async () => {

@@ -6,7 +6,6 @@ import styleSystem from '~/shared/styles';
 type Props = {
   value: string | undefined;
   onChangeText: (value: string) => void;
-  onSubmit: () => void;
   disabled: boolean;
 };
 
@@ -16,7 +15,6 @@ const PhoneInput: React.FC<Props> = props => {
       editable={!props.disabled}
       value={props.value}
       onChangeText={props.onChangeText}
-      onEndEditing={props.onSubmit}
       placeholder={'(xxx)-xxx-xx-xx'}
       keyboardType={'phone-pad'}
       style={styles.input}
